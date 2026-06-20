@@ -5,11 +5,13 @@ Hệ thống quản lý đại lý xe ô tô.
 ## Công nghệ sử dụng
 
 - Frontend: Vue.js
-- Công cụ phát triển Frontend: Visual Studio Code
+-   Công cụ phát triển Frontend: Visual Studio Code
+-   Name Folder: my-project
 - Backend: Spring Boot
-- Công cụ phát triển Backend: IntelliJ IDEA
+-   Công cụ phát triển Backend: IntelliJ IDEA
+-   Name Folder: manageCar
 - Database: MySQL
-- Công cụ quản lý CSDL: phpMyAdmin
+-   Công cụ quản lý CSDL: phpMyAdmin
   
 ## Chức năng
 
