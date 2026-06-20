@@ -1,0 +1,37 @@
+package com.example.manageCar.repository;
+
+import com.example.manageCar.model.CTCar;
+import com.example.manageCar.model.CTCarID;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface carDetailRepository extends JpaRepository<CTCar, CTCarID> {
+
+    @Query("Select c From CTCar c JOIN FETCH c.color JOIN FETCH c.version WHERE c.carID=:carID")
+    List<CTCar> findCTCarDetail(@Param("CarID") int CarID);
+
+    @Query("SELECT c FROM CTCar c JOIN FETCH c.color JOIN FETCH c.version WHERE c.carID = :carID")
+    List<CTCar> findByCarIDWithDetails(@Param("CarID") int CarID);
+
+    @Query("""
+SELECT c
+FROM CTCar c
+WHERE c.carID = :carID
+""")
+    List<CTCar> findDetailsByCarID(
+            @Param("carID") Integer carID);
+
+    Optional<CTCar> findByCarIDAndColorIDAndVersionID(Integer CarID, Integer ColorID, Integer VersionID);
+
+    boolean existsByCarIDAndColorIDAndVersionID(
+            int carID,
+            int colorID,
+            int versionID
+    );
+}
