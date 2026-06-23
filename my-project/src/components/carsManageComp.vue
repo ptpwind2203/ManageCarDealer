@@ -16,7 +16,7 @@
     <div v-if="showForm" class="form-container">
 
       <h2>
-        {{ isEdit ? "Sửa Xe" : "Thêm Xe" }}
+        {{ isEdit ? "Sửa Thông Tin Cơ Bản Xe" : "Thêm Xe" }}
       </h2>
 
         <div class="form-group">
@@ -52,7 +52,6 @@
         </div>
 
     </div>
-
     <!-- TABLE -->
     <table class="product-table">
 
@@ -83,9 +82,8 @@
 
           <td>
             <div class="action-buttons">
-              <router-link class="edit-btn" :to="`/cars/${item.carID}`">chi tiết</router-link>
-
-            
+              <button class="edit-btn" @click="openEditForm(item)">Sửa</button>
+              <router-link class="detail-btn" :to="`/cars/${item.carID}`">Chi Tiết</router-link>
             </div>
           </td>
         </tr>
@@ -155,9 +153,16 @@ const getCars = async () => {
 //hàm dùng để lưu dữ liệu xe
 const saveCar = async () => {
   try {
-    await axios.post(API, car.value);
+
+    if (isEdit.value) {
+      await axios.put(`${API}/${car.value.carID}`, car.value);
+    } else {
+      await axios.post(API, car.value);
+    }
+
     await getCars();
     closeForm();
+
   } catch (err) {
     console.log(err);
   }
@@ -172,10 +177,24 @@ const openAddForm = async () => {
   showForm.value = true;
   isEdit.value = false;
   car.value = { ...defaultCar };
-
-  
 };
+const openEditForm = (item) => {
+  showForm.value = true;
+  isEdit.value = true;
 
+  car.value = {
+    carID: item.carID,
+    carName: item.carName,
+    companyCar: item.companyCar,
+    engineCapacity: item.engineCapacity,
+    describe: item.describe,
+    carImage: item.carImage
+  };
+ window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+};
 const closeForm = () => {
   showForm.value = false;
   
@@ -283,13 +302,15 @@ button{
 }
 
 .form-group label{
-  width:150px;
+  width:200px;
   font-weight:600;
-  color:#333;
+  color: red;
+  font-size: 20px;
 }
 
 .form-group input{
   flex:1;
+  font-size:20px;
 }
 
 /* FORM BUTTONS */
@@ -355,10 +376,11 @@ button{
   border-radius:8px;
 }
 
-/* ================= ACTION BUTTON (CHỈ CÒN 1) ================= */
+/* ================= ACTION BUTTON  ================= */
 .action-buttons{
   display:flex;
   justify-content:center;
+  gap:8px;
 }
 
 .edit-btn{
@@ -369,18 +391,35 @@ button{
   font-weight:600;
   text-decoration:none;
   color:white;
-  background:linear-gradient(135deg,#f39c12,#e67e22);
+  background:#2ecc71;
   transition:0.25s;
-
   white-space: nowrap;
 }
 
 .edit-btn:hover{
   transform:translateY(-2px);
+  background:#c90b0b;
   opacity:0.9;
 }
+.detail-btn{
+  display:inline-block;
+  padding:10px 18px;
+  border-radius:10px;
+  font-size: 12px;
+  font-weight:600;
+  text-decoration:none;
+  color:white;
+  background:#2ecc71;
+  transition:0.25s;
+  white-space: nowrap;
+}
 
-/* ================= SELECT STYLE (GIỮ NGUYÊN) ================= */
+.detail-btn:hover{
+  transform:translateY(-2px);
+  background:#c90b0b;
+  opacity:0.9;
+}
+/* ================= SELECT STYLE================= */
 .Select select{
   flex:1;
   padding:12px 14px;

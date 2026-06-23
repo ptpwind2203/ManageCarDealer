@@ -175,10 +175,7 @@ const handleSubmit = async () => {
         );
     }
 };
-console.log(props.carDetail);
-console.log(defaultColor.value);
-console.log(defaultVersion.value);
-console.log(formData.value);
+
 onMounted(() => {
      getColors();
      getVersions();

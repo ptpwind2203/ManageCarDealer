@@ -52,29 +52,10 @@
 
     <!-- USER -->
     <div class="auth">
-
-      <!-- CHƯA LOGIN -->
-      <div v-if="!isLogin" class="auth-buttons">
-
-        <button class="login-btn">
-          Đăng nhập
-        </button>
-
-        <button class="register-btn">
-          Đăng ký
-        </button>
-
-      </div>
-
-      <!-- ĐÃ LOGIN -->
-      <div v-else class="user-info">
-
-
-        <span>
-          {{ username }}
-        </span>
-
-      </div>
+      <h1 class="user-info">
+        <span>Xin chào, Admin</span>
+      </h1>
+      
 
     </div>
 
