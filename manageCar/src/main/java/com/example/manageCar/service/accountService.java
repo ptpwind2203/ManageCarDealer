@@ -3,6 +3,7 @@ package com.example.manageCar.service;
 import com.example.manageCar.DTO.accountResponse;
 import com.example.manageCar.model.Account;
 import com.example.manageCar.model.Role;
+import com.example.manageCar.model.cars;
 import com.example.manageCar.repository.accountRepository;
 import com.example.manageCar.repository.roleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,4 +45,27 @@ public class accountService {
     public List<Role> getAllRoles(){
         return roleRepository.findAll();
     }
+
+
+
+    public accountResponse getDetailsByUserID(Integer id) {
+
+        Account account = accountRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy tài khoản"));
+
+        accountResponse response = new accountResponse();
+
+        response.setUserID(account.getUserID());
+        response.setFullName(account.getFullName());
+        response.setAccount(account.getAccount());
+        response.setEmail(account.getEmail());
+        response.setBirthDate(account.getBirthDate());
+        response.setNumberPhone(account.getNumberPhone());
+        response.setAddress(account.getAddress());
+        response.setRoleID(account.getRole().getRoleID());
+        response.setRoleName(account.getRole().getRoleName());
+
+        return response;
+    }
+
 }
