@@ -32,7 +32,7 @@ public class CTCarController {
 
 
     @PostMapping("/add")
-    public ResponseEntity<String> add(@RequestBody carDetailRequest request){
+        public ResponseEntity<String> add(@RequestBody carDetailRequest request){
         if (request.getVersionID() == null || request.getVersionID() <= 0) {
             throw new RuntimeException("Vui lòng chọn phiên bản");
         }

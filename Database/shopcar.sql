@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 24, 2026 at 09:44 AM
+-- Generation Time: Jun 25, 2026 at 04:56 AM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.28
 
@@ -44,25 +44,10 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`UserID`, `FullName`, `Account`, `Password`, `BirthDate`, `Email`, `NumberPhone`, `Address`, `roleID`) VALUES
-(1, 'Nguyen Van An', 'an.nguyen', '123456', '1995-03-12', 'an.nguyen@gmail.com', '0901234567', 'Ha Noi', 1),
-(2, 'Tran Thi Bich', 'bich.tran', '123456', '1998-07-21', 'bich.tran@gmail.com', '0912345678', 'Da Nang', 1),
-(3, 'Le Minh Cuong', 'cuong.le', '123456', '1992-11-05', 'cuong.le@gmail.com', '0923456789', 'Ho Chi Minh', 1),
-(4, 'Pham Thi Dao', 'dao.pham', '123456', '1997-01-18', 'dao.pham@gmail.com', '0934567890', 'Hue', 1),
-(5, 'Hoang Van Em', 'em.hoang', '123456', '1994-06-30', 'em.hoang@gmail.com', '0945678901', 'Hai Phong', 1),
-(6, 'Vo Thi Giang', 'giang.vo', '123456', '1999-09-14', 'giang.vo@gmail.com', '0956789012', 'Can Tho', 1),
-(7, 'Dang Minh Hung', 'hung.dang', '123456', '1993-04-25', 'hung.dang@gmail.com', '0967890123', 'Quang Ninh', 1),
-(8, 'Bui Thi Hoa', 'hoa.bui', '123456', '1996-12-02', 'hoa.bui@gmail.com', '0978901234', 'Nha Trang', 1),
-(9, 'Do Van Khoa', 'khoa.do', '123456', '1991-08-19', 'khoa.do@gmail.com', '0989012345', 'Binh Duong', 1),
-(10, 'Nguyen Thi Lan', 'lan.nguyen', '123456', '1998-05-10', 'lan.nguyen@gmail.com', '0990123456', 'Dong Nai', 1),
-(11, 'Tran Van Minh', 'minh.tran', '123456', '1990-02-27', 'minh.tran@gmail.com', '0901122334', 'Ha Nam', 1),
-(12, 'Le Thi Nga', 'nga.le', '123456', '1997-10-08', 'nga.le@gmail.com', '0912233445', 'Thai Binh', 1),
-(13, 'Pham Van Phuc', 'phuc.pham', '123456', '1995-07-15', 'phuc.pham@gmail.com', '0923344556', 'Vinh Phuc', 1),
-(14, 'Hoang Thi Quynh', 'quynh.hoang', '123456', '1999-03-03', 'quynh.hoang@gmail.com', '0934455667', 'Bac Ninh', 1),
-(15, 'Vu Van Son', 'son.vu', '123456', '1992-11-22', 'son.vu@gmail.com', '0945566778', 'Thanh Hoa', 1),
-(16, 'Phạm Thanh Phong', 'Ptpwind123', 'ptpwind123@', '2005-03-22', 'ptpwind2203@gmail.com', '0798464305', 'hồ chí minh', 1),
-(17, 'Thanh Phong Phạm', 'ptpwind112', '$2a$10$UflFq.jwl5CidDRpXootL.PjA0v9JCfRDaG2PJHQjanxAw0aFsm8e', '2026-04-15', 'troknhok12@gmail.com', '0798464305', '53/18/10/ Đs 4 Bình Hưng Hòa B Bình Tân Tp. Hồ Chí Minh', 1),
-(18, 'Trần Nguyễn Thanh Tuấn', 'tuan123', '$2a$10$X.aO0Pc88Eqjpk5xYZc00eaAmt0pi6EiZmnqhFG2QAYI4WX04ejGS', '2026-04-16', 'tuan@gmail.com', '0123698745', 'A5/59c/7h5 ấp 1b Xã Vĩnh Lộc A, Huyện Bình Chánh, TP. Hồ Chí Minh', 1),
-(19, 'Thanh Phong Phạm', 'ptpwind1', '$2a$10$oIlZD6nXcVARRqOhuprH.ewrrHccj5gg9j0DJTtESgdvhEpTMXOFu', '2026-04-22', 'troknhok012@gmail.com', '0912121212', 'A5/59c/7h5 ấp 1b Xã Vĩnh Lộc A, Huyện Bình Chánh, TP. Hồ Chí Minh', 1);
+(1, 'Phạm Thanh Phong', 'Ptpwind123', 'ptpwind123@', '2005-03-22', 'ptpwind2203@gmail.com', '0798464305', 'hồ chí minh', 1),
+(2, 'Thanh Phong Phạm', 'ptpwind112', '$2a$10$UflFq.jwl5CidDRpXootL.PjA0v9JCfRDaG2PJHQjanxAw0aFsm8e', '2026-04-15', 'troknhok12@gmail.com', '0798464305', '53/18/10/ Đs 4 Bình Hưng Hòa B Bình Tân Tp. Hồ Chí Minh', 1),
+(3, 'Trần Nguyễn Thanh Tuấn', 'tuan123', '$2a$10$X.aO0Pc88Eqjpk5xYZc00eaAmt0pi6EiZmnqhFG2QAYI4WX04ejGS', '2026-04-16', 'tuan@gmail.com', '0123698745', 'A5/59c/7h5 ấp 1b Xã Vĩnh Lộc A, Huyện Bình Chánh, TP. Hồ Chí Minh', 1),
+(4, 'Thanh Phong Phạm', 'ptpwind1', '$2a$10$oIlZD6nXcVARRqOhuprH.ewrrHccj5gg9j0DJTtESgdvhEpTMXOFu', '2026-04-22', 'troknhok012@gmail.com', '0912121212', 'A5/59c/7h5 ấp 1b Xã Vĩnh Lộc A, Huyện Bình Chánh, TP. Hồ Chí Minh', 1);
 
 -- --------------------------------------------------------
 

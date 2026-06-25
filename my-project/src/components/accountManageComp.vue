@@ -8,7 +8,7 @@
       <div class="actions">     <!-- ô tìm kiếm và nút thêm tài khoản -->
         <input v-model="keyword" type="text" placeholder="Tìm kiếm tài khoản..." class="search-input"/> <!-- ô tìm kiếm -->
 
-        <button class="add-btn" @click="openAddForm"> + Thêm Tài Khoản</button>  <!-- nút thêm tài khoản -->
+        <button v-if="accountStore.isAdmin" class="add-btn" @click="openAddForm"> + Thêm Tài Khoản</button>  <!-- nút thêm tài khoản -->
       </div>
     </div>
 
@@ -21,32 +21,30 @@
 
         <div class="form-group">
           <label>Tên tài khoản:</label>
-          <input v-model="car.carName" placeholder="Nhập tên tài khoản"/> 
+          <input v-model="account.fullName" placeholder="Nhập tên tài khoản"/> 
         </div>
 
         <div class="form-group">
-          <label>Hãng xe:</label>
-          <input v-model="car.companyCar" placeholder="Nhập hãng xe"/>
+          <label>Tài khoản:</label>
+          <input v-model="account.account" placeholder="Nhập tài khoản"/>
         </div>
-
         <div class="form-group">
-          <label>Dung tích động cơ:</label>
-          <input v-model="car.engineCapacity" placeholder="Nhập dung tích" />
+          <label>Vai trò:</label>
+          <select v-model="account.roleID"  required>
+        <option value="" disabled>Chọn vai trò</option>
+
+        <option
+          v-for="role in defaultRole"
+          :key="role.roleID"
+          :value="role.roleID"
+        >
+          {{ role.roleName }}
+        </option>
+      </select>
         </div>
-
-        <div class="form-group">
-          <label>Mô tả:</label>
-          <input v-model="car.describe" placeholder="Nhập mô tả"/>
-        </div>
-
-        <div class="form-group">
-          <label>Tên ảnh:</label>
-          <input v-model="car.carImage" placeholder="VD: Audi_R8"/>
-        </div>
-
-
+    
         <div class="form-buttons">
-          <button class="save-btn" @click="saveCar"> {{ isEdit ? "Cập Nhật" : "Lưu" }} </button>
+          <button class="save-btn" @click="saveAccount"> {{ isEdit ? "Cập Nhật" : "Lưu" }} </button>
 
           <button class="cancel-btn" @click="closeForm"> Hủy </button>
         </div>
@@ -58,32 +56,32 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Hình</th>
-          <th>Tên Xe</th>
-          <th>Hãng</th>
-          <th>Động Cơ</th>
-          <th>Mô Tả</th>
+          <th>Họ và Tên</th>
+          <th>Tên tài khoản</th>
+          <th>Ngày sinh</th>
+          <th>Số điện thoại</th>
+          <th>Email</th>
+          <th>Vai trò</th>
           <th>Chức Năng</th>
         </tr>
       </thead>
 
       <tbody>
 
-        <tr v-for="item in filteredCars" :key="item.carID">
+        <tr v-for="infor in filteredAccounts " :key="infor.userID">
 
-          <td>{{ item.carID }}</td>
-
-          <td><img :src="getImage(item.carImage)" class="car-image"/></td>
-
-          <td>{{ item.carName }}</td>
-          <td>{{ item.companyCar }}</td>
-          <td>{{ item.engineCapacity }}</td>
-          <td>{{ item.describe }}</td>
+          <td>{{ infor.userID }}</td>
+          <td>{{ infor.fullName }}</td>
+          <td>{{ infor.account }}</td>
+          <td>{{ infor.birthDate }}</td>
+          <td>{{ infor.numberPhone }}</td>
+          <td>{{ infor.email }}</td>
+          <td>{{ infor.roleName }}</td>
 
           <td>
             <div class="action-buttons">
-              <button class="edit-btn" @click="openEditForm(item)">Sửa</button>
-              <router-link class="detail-btn" :to="`/cars/${item.carID}`">Chi Tiết</router-link>
+              <button v-if="accountStore.isAdmin" class="edit-btn" @click="openEditForm(infor)">Sửa</button>
+              <router-link class="detail-btn" :to="`/accouonts/${infor.userID}`">Chi Tiết</router-link>
             </div>
           </td>
         </tr>
@@ -95,109 +93,135 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import axios from "axios";
+import { useAccountStore } from '@/stores/Account'
 
+const accountStore = useAccountStore()
 // ======================
 // STATE
 // ======================
 
-const API = "http://localhost:8080/api/cars";
+const API = "http://localhost:8080/api/accounts";
 
-const cars = ref([]);
+const accounts = ref([]);
 const keyword = ref("");
 const showForm = ref(false);
 const isEdit = ref(false);
+const defaultRole = ref([]);
 
-const defaultCar = {
-  carID: null,
-  carName: "",
-  companyCar: "",
-  engineCapacity: "",
-  describe: "",
-  carImage: ""
+const defaultAccount = {
+  userID: null,
+  fullName: "",
+  account: "",
+  password: "",
+  birthDate: "",
+  email: "",
+  numberPhone: "",
+  address: "",
+  roleID: null
 };
 
-const car = ref({ ...defaultCar });
+const account = ref({ ...defaultAccount });
 
+const getRoles = async () => {
+    try {
+        const { data } = await axios.get(`${API}/roles`);
+        defaultRole.value = data;
+
+        console.log("Vai trò:", data);
+    } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu vai trò:", error);
+        defaultRole.value = [];
+    }
+};
+const getAccounts = async () => {
+  try {
+    const { data } = await axios.get(API);
+    accounts.value = data;
+  } catch (err) {
+    console.log(err);
+  }
+};
 // chức năng tìm kiếm xe theo tên hoặc hãng
-const filteredCars = computed(() =>
-  cars.value.filter(item =>
-    item.carName?.toLowerCase().includes(keyword.value.toLowerCase())
-      || item.companyCar?.toLowerCase().includes(keyword.value.toLowerCase())
+const filteredAccounts = computed(() =>
+  accounts.value.filter(infor =>
+    infor.fullName?.toLowerCase().includes(keyword.value.toLowerCase())
+      || infor.account?.toLowerCase().includes(keyword.value.toLowerCase())
+      || infor.roleName?.toLowerCase().includes(keyword.value.toLowerCase())
+      || infor.email?.toLowerCase().includes(keyword.value.toLowerCase())
+      || infor.numberPhone?.toLowerCase().includes(keyword.value.toLowerCase())
   )
 );
 
 
-// IMAGE 
-// vì đặt tên ảnh trong database chứ không phải link nên dùng hàm này để lấy link ảnh
-// đặt tên ảnh trùng với tên đường link ảnh
-const getImage = (name) => {
-  try {
-    return require(`../assets/${name}.jpg`);
-  } catch {
-    return require("../assets/logoCarDealer.png");
-  }
-};
+
 
 // API
-// nhận dữ liệu từ API của backend và lưu vào trong data. sau đó gán dữ liệu data đó vào cars
-const getCars = async () => {
-  try {
-    const { data } = await axios.get(API);
-    cars.value = data;
-  } catch (err) {
-    console.log(err);
-  }
-};
+// nhận dữ liệu từ API của backend và lưu vào trong data. sau đó gán dữ liệu data đó vào accounts
+// const getAccounts = async () => {
+//   try {
+//     const { data } = await axios.get(API);
+//     account.value = data;
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
 
 
-//hàm dùng để lưu dữ liệu xe
-const saveCar = async () => {
-  try {
-
-    if (isEdit.value) {
-      await axios.put(`${API}/${car.value.carID}`, car.value);
-    } else {
-      await axios.post(API, car.value);
-    }
-
-    await getCars();
-    closeForm();
-
-  } catch (err) {
-    console.log(err);
-  }
-};
 
 
 // ======================
 // FORM
 // ======================
+const saveAccount = async () => {
+  try {
+    if (isEdit.value) {
+      await axios.put(
+        `${API}/${account.value.userID}`,
+        account.value
+      );
+    } else {
+      await axios.post(
+        API,
+        account.value
+      );
+    }
 
+    await getAccounts();
+    closeForm();
+
+  } catch (error) {
+    console.error(error);
+  }
+};
 const openAddForm = async () => {
   showForm.value = true;
   isEdit.value = false;
-  car.value = { ...defaultCar };
+  account.value = { ...defaultAccount };
 };
-const openEditForm = (item) => {
+const openEditForm = (infor) => {
   showForm.value = true;
   isEdit.value = true;
 
-  car.value = {
-    carID: item.carID,
-    carName: item.carName,
-    companyCar: item.companyCar,
-    engineCapacity: item.engineCapacity,
-    describe: item.describe,
-    carImage: item.carImage
+  account.value = {
+    userID: infor.userID,
+    fullName: infor.fullName,
+    account: infor.account,
+    password: infor.password,
+    birthDate: infor.birthDate,
+    email: infor.email,
+    numberPhone: infor.numberPhone,
+    address: infor.address,
+    roleID: infor.roleID
   };
- window.scrollTo({
+
+  window.scrollTo({
     top: 0,
     behavior: "smooth"
   });
 };
 const closeForm = () => {
   showForm.value = false;
-  
+  account.value = { ...defaultAccount };
 };
 
 
@@ -207,7 +231,8 @@ const closeForm = () => {
 // ======================
 
 onMounted(() => {
-  getCars();
+  getAccounts();
+  getRoles();
 });
 </script>
 

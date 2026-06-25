@@ -1,44 +1,18 @@
-package com.example.manageCar.model;
-
-import jakarta.persistence.*;
+package com.example.manageCar.DTO;
 
 import java.time.LocalDate;
 import java.util.Date;
 
-@Entity
-@Table(name = "accounts")
-public class Account {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class accountResponse {
     private Integer userID;
-
-    @Column(name = "FullName")
     private String fullName;
-
-    @Column(name = "Account")
     private String account;
-
-    @Column(name = "Password")
-    private String password;
-
-    @Column(name = "BirthDate")
     private LocalDate birthDate;
-
-    @Column(name = "Email")
     private String email;
-
-    @Column(name = "NumberPhone")
     private String numberPhone;
-
-    @Column(name = "Address")
     private String address;
-
-    @Column(name = "roleID")
     private Integer roleID;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "roleID", insertable = false, updatable = false)
-    private Role role;
+    private String roleName;
 
     public Integer getUserID() {
         return userID;
@@ -64,13 +38,7 @@ public class Account {
         this.account = account;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public LocalDate getBirthDate() {
         return birthDate;
@@ -112,11 +80,11 @@ public class Account {
         this.roleID = roleID;
     }
 
-    public Role getRole() {
-        return role;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }

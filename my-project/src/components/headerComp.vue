@@ -29,7 +29,7 @@
         </li>
 
         <li>
-          <router-link to="/customers">
+          <router-link to="/accounts">
             Khách hàng
           </router-link>
         </li>

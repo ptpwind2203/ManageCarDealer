@@ -18,8 +18,12 @@ const routes = [
     name: 'CarDetails',
     component: () => import('../components/carDetail.vue'),
     props: true
+  },
+  {
+    path: '/accounts',
+    name: 'Accounts',
+    component: () => import('../components/accountManageComp.vue')
   }
-  
 ]
 
 const router = createRouter({
