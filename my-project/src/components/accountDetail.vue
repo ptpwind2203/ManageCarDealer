@@ -13,16 +13,17 @@
 
       <div class="header-actions">
 
-          <button @click="openEditForm(account)">
-          Sửa
+        <button @click="openEditForm(account)"
+          class="btn btn-edit"  
+          >
+          Sửa Thông Tin
         </button>
 
-        <router-link
-          :to="`/accounts/${accountID}/change-password`"
-          class="btn"
+        <button @click="openEditPasswordForm"
+          class="btn btn-password"
         >
-          Đổi mật khẩu
-        </router-link>
+          Đổi Mật Khẩu
+        </button>
 
       </div>
     </div>
@@ -93,6 +94,12 @@
   @close="closeEditForm"
   @saved="reloadAfterSave"
 />
+<AccountPasswordForm
+  v-if="showEditPasswordForm"
+  @cancel="showEditPasswordForm = false"
+  @saved="reloadAfterSave"
+  :userID="account.userID"
+/>
 </template>
 
 <script setup>
@@ -100,15 +107,20 @@ import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
 import accountDetailForm from "@/components/accountDetailForm.vue";
-
+import AccountPasswordForm from "@/components/accountPasswordForm.vue";
 
 const API = "http://localhost:8080/api/accounts";
 
 const route = useRoute();
 const accountID = route.params.id;
 
+const showEditPasswordForm = ref(false);
 const showEditForm = ref(false);
 const selectedAccount = ref(null);
+
+const openEditPasswordForm = () => {
+  showEditPasswordForm.value = true;
+};
 
 const openEditForm = (account) => {
   selectedAccount.value = account;
@@ -204,14 +216,14 @@ onMounted(() => {
 }
 
 .breadcrumb a {
-  text-decoration: none; /* bỏ gạch dưới */
-  color: #000;           /* màu đen */
-  font-size: 20px;       /* cỡ chữ 10px */
+  text-decoration: none;
+  color: #000;          
+  font-size: 20px;      
   transition: color 0.3s ease;
 }
 
 .breadcrumb a:hover {
-  color: #007bff; /* màu xanh khi hover */
+  color: #007bff; 
 }
 .header {
   display: flex;
@@ -265,33 +277,60 @@ onMounted(() => {
 
 .header-actions {
   display: flex;
-  gap: 10px;
+  gap: 14px;
 }
 
 .btn {
   border: none;
+  outline: none;
   cursor: pointer;
-  padding: 10px 16px;
-  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 12px 22px;
+
+  font-size: 15px;
   font-weight: 600;
-  color: white;
+
+  border-radius: 12px;
+
   transition: all .25s ease;
 
-  background: #16a34a;
+  color: white;
+
+  box-shadow: 0 6px 16px rgba(0,0,0,.15);
 }
 
-.btn:hover {
-  background: #dc2626 !important;
-  transform: translateY(-2px);
+.btn:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,.2);
 }
 
-/* small button */
-.btn-small {
-  padding: 6px 12px;
-  font-size: 12px;
-  border-radius: 8px;
+.btn:active{
+  transform: scale(.96);
 }
 
+
+.btn-edit{
+  background: #2ecc71;
+}
+
+.btn-edit:hover{
+  background: linear-gradient(135deg,#1d4ed8,#2563eb);
+}
+
+
+
+.btn-password{
+  background: #2ecc71;
+}
+
+.btn-password:hover{
+  background: linear-gradient(135deg,#c2410c,#ea580c);
+}
 /* ================= CARD ================= */
 
 .main-card {

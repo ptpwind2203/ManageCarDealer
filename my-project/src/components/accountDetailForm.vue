@@ -130,7 +130,6 @@ const formData = ref({
   roleID: null
 });
 
-// LOAD ROLE (nếu cần API role riêng)
 const getRoles = async () => {
   try {
     const { data } = await axios.get(`${API}/roles`);
@@ -150,12 +149,12 @@ const handleSubmit = async () => {
     emit("saved");
     emit("close");
   } catch (error) {
-    console.error(error);
-    alert("Có lỗi xảy ra khi cập nhật");
+    console.log("Response:", error.response);
+    console.log("Data:", error.response.data);
+    alert(error.response.data);
   }
 };
 
-// INIT DATA
 onMounted(() => {
   getRoles();
 

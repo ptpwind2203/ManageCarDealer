@@ -33,11 +33,10 @@ public class Account {
     @Column(name = "Address")
     private String address;
 
-    @Column(name = "roleID")
-    private Integer roleID;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "roleID", insertable = false, updatable = false)
+    @JoinColumn(name = "roleID")
     private Role role;
 
     public Integer getUserID() {
@@ -104,13 +103,6 @@ public class Account {
         this.address = address;
     }
 
-    public Integer getRoleID() {
-        return roleID;
-    }
-
-    public void setRoleID(Integer roleID) {
-        this.roleID = roleID;
-    }
 
     public Role getRole() {
         return role;

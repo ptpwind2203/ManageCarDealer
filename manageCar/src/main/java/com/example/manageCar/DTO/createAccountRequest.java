@@ -1,9 +1,8 @@
 package com.example.manageCar.DTO;
 
-import javax.lang.model.element.NestingKind;
 import java.time.LocalDate;
 
-public class accountRequest {
+public class createAccountRequest {
     private String account;
     private String fullName;
     private String numberPhone;
@@ -11,7 +10,15 @@ public class accountRequest {
     private LocalDate birthDate;
     private String address;
     private Integer roleID;
+    private String password;
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getAccount() {
         return account;
