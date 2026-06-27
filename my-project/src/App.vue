@@ -1,20 +1,23 @@
 <template>
   <div>
-    <HeaderCom />
+    <HeaderCom v-if="showHeader" />
 
-
-    <main class="content">
+    <main class="content" :class="{ 'full-content': !showHeader }">
       <router-view :key="$route.fullPath" />
     </main>
-
   </div>
 </template>
 
 <script setup>
 import HeaderCom from './components/headerComp.vue'
+import { computed } from "vue";
+import { useRoute } from "vue-router";
 
+const route = useRoute();
 
-
+const showHeader = computed(() => {
+  return route.path !== "/login";
+});
 </script>
 
 <style>
@@ -24,49 +27,39 @@ import HeaderCom from './components/headerComp.vue'
   box-sizing: border-box;
 }
 
-/* FULL HEIGHT */
 html,
 body,
 #app{
   width: 100%;
   min-height: 100vh;
-
   font-family: Arial, Helvetica, sans-serif;
-
   background: #f5f6fa;
 }
 
-/* LAYOUT */
-.app{
-  display: flex;
-  min-height: 100vh;
-}
-
-/* CONTENT */
 .content{
-
-  /* chừa chỗ cho sidebar */
-  margin-left: 250px;
-
-  width: calc(100% - 250px);
-
+  margin-left: 260px;
+  width: calc(100% - 260px);
   min-height: 100vh;
-
   padding: 25px;
-
   background: #f5f6fa;
-
   transition: 0.3s;
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px){
+.full-content{
+  margin-left: 0;
+  width: 100%;
+}
 
+@media (max-width: 768px){
   .content{
-    margin-left: 80px;
-    width: calc(100% - 80px);
+    margin-left: 90px;
+    width: calc(100% - 90px);
     padding: 15px;
   }
 
+  .full-content{
+    margin-left: 0;
+    width: 100%;
+  }
 }
 </style>

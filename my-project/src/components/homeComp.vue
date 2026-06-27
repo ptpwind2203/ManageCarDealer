@@ -1,4 +1,3 @@
-```vue
 <template>
   <div class="dashboard">
 
@@ -13,10 +12,10 @@
       </div>
 
       <div class="info-card">
-        <h2>Nguyễn Văn A</h2>
-        <p>Chức vụ: Quản trị viên</p>
-        <p>Email: nguyenvana@gmail.com</p>
-        <p>SĐT: 0123456789</p>
+        <h2>{{ fullName }}</h2>
+        <p>Chức vụ: {{ role }}</p>
+        <p>Email: {{ email }}</p>
+        <p>SĐT: {{ numberPhone }}</p>
       </div>
 
     </div>
@@ -119,6 +118,19 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue";
+
+const fullName = ref("");
+const role = ref("");
+const email = ref("");
+const numberPhone = ref("");
+
+onMounted(() => {
+  fullName.value = localStorage.getItem("fullName") || "";
+  role.value = localStorage.getItem("role") || "";
+  email.value = localStorage.getItem("email") || "";
+  numberPhone.value = localStorage.getItem("numberPhone") || "";
+});
 </script>
 
 <style scoped>

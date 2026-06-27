@@ -1,9 +1,9 @@
 package com.example.manageCar.service;
 
-import com.example.manageCar.DTO.accountRequest;
+import com.example.manageCar.DTO.AccountRequest;
+import com.example.manageCar.DTO.ChangePasswordRequest;
+import com.example.manageCar.DTO.CreateAccountRequest;
 import com.example.manageCar.DTO.accountResponse;
-import com.example.manageCar.DTO.changePasswordRequest;
-import com.example.manageCar.DTO.createAccountRequest;
 import com.example.manageCar.exception.BadRequestException;
 import com.example.manageCar.model.Account;
 import com.example.manageCar.model.Role;
@@ -54,8 +54,6 @@ public class accountService {
         return roleRepository.findAll();
     }
 
-
-
     public accountResponse getDetailsByUserID(Integer id) {
 
         Account account = accountRepository.findById(id)
@@ -76,8 +74,7 @@ public class accountService {
         return response;
     }
 
-
-    public void createAccount(createAccountRequest request) {
+    public void createAccount(CreateAccountRequest request) {
 
         if (request.getFullName() == null || request.getFullName().isBlank()) {
             throw new BadRequestException("Họ và tên không được để trống");
@@ -129,7 +126,7 @@ public class accountService {
     }
 
 
-    public void updateAccount(accountRequest request, Integer id) {
+    public void updateAccount(AccountRequest request, Integer id) {
 
         // Kiểm tra tài khoản có tồn tại không
         Account account = accountRepository.findById(id)
@@ -204,7 +201,7 @@ public class accountService {
         accountRepository.save(account);
     }
 
-    public void changePassword(changePasswordRequest request, Integer id) {
+    public void changePassword(ChangePasswordRequest request, Integer id) {
 
         Account account = accountRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy tài khoản"));
@@ -255,5 +252,4 @@ public class accountService {
 
         accountRepository.save(account);
     }
-
 }

@@ -1,13 +1,10 @@
 package com.example.manageCar.controller;
 
-import com.example.manageCar.DTO.accountRequest;
+import com.example.manageCar.DTO.AccountRequest;
+import com.example.manageCar.DTO.ChangePasswordRequest;
+import com.example.manageCar.DTO.CreateAccountRequest;
 import com.example.manageCar.DTO.accountResponse;
-import com.example.manageCar.DTO.changePasswordRequest;
-import com.example.manageCar.DTO.createAccountRequest;
-import com.example.manageCar.model.Account;
 import com.example.manageCar.model.Role;
-import com.example.manageCar.model.cars;
-import com.example.manageCar.repository.carDetailRepository;
 import com.example.manageCar.service.accountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,11 +35,9 @@ public class accountController {
         return accountService.getDetailsByUserID(id);
     }
 
-
-
     @PostMapping
     public ResponseEntity<String> createAccount(
-            @RequestBody createAccountRequest request) {
+            @RequestBody CreateAccountRequest request) {
 
         accountService.createAccount(request);
 
@@ -50,11 +45,9 @@ public class accountController {
 
     }
 
-
-
     @PutMapping("/{id}")
     public ResponseEntity<String> updateAccount(
-            @RequestBody accountRequest request,
+            @RequestBody AccountRequest request,
             @PathVariable Integer id) {
 
         try {
@@ -68,7 +61,7 @@ public class accountController {
     @PutMapping("/{id}/change-password")
     public ResponseEntity<String> changePassword(
             @PathVariable Integer id,
-            @RequestBody changePasswordRequest request) {
+            @RequestBody ChangePasswordRequest request) {
 
         try {
 

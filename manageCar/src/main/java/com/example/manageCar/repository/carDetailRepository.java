@@ -13,25 +13,42 @@ import java.util.Optional;
 @Repository
 public interface carDetailRepository extends JpaRepository<CTCar, CTCarID> {
 
-    @Query("Select c From CTCar c JOIN FETCH c.color JOIN FETCH c.version WHERE c.carID=:carID")
-    List<CTCar> findCTCarDetail(@Param("CarID") int CarID);
-
-    @Query("SELECT c FROM CTCar c JOIN FETCH c.color JOIN FETCH c.version WHERE c.carID = :carID")
-    List<CTCar> findByCarIDWithDetails(@Param("CarID") int CarID);
+    @Query("""
+        SELECT c
+        FROM CTCar c
+        JOIN FETCH c.color
+        JOIN FETCH c.version
+        WHERE c.carID = :carID
+    """)
+    List<CTCar> findCTCarDetail(@Param("carID") int carID);
 
     @Query("""
-SELECT c
-FROM CTCar c
-WHERE c.carID = :carID
-""")
-    List<CTCar> findDetailsByCarID(
-            @Param("carID") Integer carID);
+        SELECT c
+        FROM CTCar c
+        JOIN FETCH c.color
+        JOIN FETCH c.version
+        WHERE c.carID = :carID
+    """)
+    List<CTCar> findByCarIDWithDetails(@Param("carID") int carID);
 
-    Optional<CTCar> findByCarIDAndColorIDAndVersionID(Integer CarID, Integer ColorID, Integer VersionID);
+    @Query("""
+        SELECT c
+        FROM CTCar c
+        WHERE c.carID = :carID
+    """)
+    List<CTCar> findDetailsByCarID(@Param("carID") Integer carID);
+
+    Optional<CTCar> findByCarIDAndColorIDAndVersionID(
+            Integer carID,
+            Integer colorID,
+            Integer versionID
+    );
 
     boolean existsByCarIDAndColorIDAndVersionID(
             int carID,
             int colorID,
             int versionID
     );
+
+    List<CTCar> findByCarID(Integer carID);
 }

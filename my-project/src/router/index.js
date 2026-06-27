@@ -24,18 +24,44 @@ const routes = [
     name: 'Accounts',
     component: () => import('../components/accountManageComp.vue')
   },
-   {
+  {
     path: '/accounts/:id',
     name: 'AccountDetails',
     component: () => import('../components/accountDetail.vue'),
     props: true
-  }
-
-]
+  },
+  // Ví dụ cấu hình đúng trong router
+  {
+    path: '/orders',
+    name: 'orders',
+    component: () => import('../components/OrderManagement.vue') // Đảm bảo đúng đường dẫn file và tên component
+  },
+  {
+    path: "/orders/create",
+    name: "CreateOrder",
+    component: () => import("../components/CreateOrder.vue")
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("../components/LoginForm.vue")
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(),
   routes
-})
+});
 
-export default router
+// Route Guard
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem("token");
+
+  if (to.path !== "/login" && !token) {
+    next("/login");
+  } else {
+    next();
+  }
+});
+
+export default router;

@@ -1,7 +1,6 @@
 package com.example.manageCar.repository;
 
 import com.example.manageCar.model.Account;
-import com.example.manageCar.model.CTCar;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -28,6 +27,4 @@ public interface accountRepository extends JpaRepository<Account,Integer> {
     boolean existsByEmail(String email);
 
     boolean existsByNumberPhone(String numberPhone);
-
-
 }

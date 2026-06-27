@@ -91,7 +91,6 @@ import axios from 'axios';
 import { ref, onMounted } from 'vue';
 import { defineProps } from 'vue';
 
-
 const API = "http://localhost:8080/api/car-details";
 const emit = defineEmits(['close', 'saved']);
 const defaultColor = ref([]);

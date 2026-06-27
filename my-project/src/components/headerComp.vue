@@ -30,7 +30,7 @@
 
         <li>
           <router-link to="/accounts">
-            Khách hàng
+            Tài khoản
           </router-link>
         </li>
 
@@ -53,9 +53,12 @@
     <!-- USER -->
     <div class="auth">
       <h1 class="user-info">
-        <span>Xin chào, Admin</span>
+        <span>Xin chào, {{ fullName }}</span>
       </h1>
       
+      <button class="logout-btn" @click="logout">
+        Đăng xuất
+      </button>
 
     </div>
 
@@ -63,10 +66,39 @@
 </template>
 
 <script setup>
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
+const fullName = ref("");
+
+onMounted(() => {
+  fullName.value = localStorage.getItem("fullName") || "Admin";
+});
+
+const logout = () => {
+  localStorage.clear();
+  router.push("/login");
+};
 </script>
 
 <style scoped>
+
+.logout-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: #d70018;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.logout-btn:hover {
+  opacity: 0.9;
+}
 
 /* RESET */
 *{
