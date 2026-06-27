@@ -18,8 +18,10 @@ Hệ thống quản lý đại lý xe ô tô.
 - Quản lý xe
 - Quản lý chi tiết xe
 - Quản lý tài khoản 
-- Quản lý hóa đơn (đang phát triển)
+- Quản lý hóa đơn
+- Đăng nhập và phân quyền
 - Trong quá trình phát triển có thể có thêm chức năng khác....
 
 ## Thành viên
 - Phạm Thanh Phong
+- Trần Nguyễn Thanh Tuấn
