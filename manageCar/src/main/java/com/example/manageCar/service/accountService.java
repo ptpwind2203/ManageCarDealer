@@ -128,20 +128,13 @@ public class accountService {
 
     public void updateAccount(AccountRequest request, Integer id) {
 
-        // Kiểm tra tài khoản có tồn tại không
         Account account = accountRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy tài khoản"));
 
-        // ==========================
-        // Kiểm tra họ tên
-        // ==========================
         if (request.getFullName() == null || request.getFullName().trim().isEmpty()) {
             throw new RuntimeException("Họ và tên không được để trống");
         }
 
-        // ==========================
-        // Kiểm tra tài khoản
-        // ==========================
         if (request.getAccount() == null || request.getAccount().trim().isEmpty()) {
             throw new RuntimeException("Tài khoản không được để trống");
         }
@@ -153,9 +146,6 @@ public class accountService {
             throw new RuntimeException("Tài khoản đã tồn tại");
         }
 
-        // ==========================
-        // Kiểm tra Email
-        // ==========================
         if (request.getEmail() == null || request.getEmail().trim().isEmpty()) {
             throw new RuntimeException("Email không được để trống");
         }
@@ -167,9 +157,6 @@ public class accountService {
             throw new RuntimeException("Email đã tồn tại");
         }
 
-        // ==========================
-        // Kiểm tra số điện thoại
-        // ==========================
         if (request.getNumberPhone() == null || request.getNumberPhone().trim().isEmpty()) {
             throw new RuntimeException("Số điện thoại không được để trống");
         }
@@ -181,15 +168,9 @@ public class accountService {
             throw new RuntimeException("Số điện thoại đã tồn tại");
         }
 
-        // ==========================
-        // Kiểm tra Role
-        // ==========================
         Role role = roleRepository.findById(request.getRoleID())
                 .orElseThrow(() -> new BadRequestException("Vai trò không tồn tại"));
 
-        // ==========================
-        // Cập nhật dữ liệu
-        // ==========================
         account.setFullName(request.getFullName().trim());
         account.setAccount(request.getAccount().trim());
         account.setEmail(request.getEmail().trim());
@@ -197,31 +178,26 @@ public class accountService {
         account.setBirthDate(request.getBirthDate());
         account.setAddress(request.getAddress() == null ? "" : request.getAddress().trim());
         account.setRole(role);
-
         accountRepository.save(account);
     }
 
     public void changePassword(ChangePasswordRequest request, Integer id) {
-
         Account account = accountRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy tài khoản"));
 
         if (request.getPasswordOld() == null
                 || request.getPasswordOld().trim().isEmpty()) {
-
             throw new RuntimeException("Vui lòng nhập mật khẩu hiện tại");
         }
 
         if (!passwordEncoder.matches(
                 request.getPasswordOld(),
                 account.getPassword())) {
-
             throw new RuntimeException("Mật khẩu hiện tại không đúng");
         }
 
         if (request.getPasswordNew() == null
                 || request.getPasswordNew().trim().isEmpty()) {
-
             throw new RuntimeException("Vui lòng nhập mật khẩu mới");
         }
 
@@ -232,13 +208,11 @@ public class accountService {
         if (passwordEncoder.matches(
                 request.getPasswordNew(),
                 account.getPassword())) {
-
             throw new RuntimeException("Mật khẩu mới không được trùng mật khẩu cũ");
         }
 
         if (request.getConfirmPasswordNew() == null
                 || request.getConfirmPasswordNew().trim().isEmpty()) {
-
             throw new RuntimeException("Vui lòng xác nhận mật khẩu");
         }
 
@@ -246,9 +220,7 @@ public class accountService {
             throw new RuntimeException("Mật khẩu xác nhận không khớp");
         }
 
-        account.setPassword(
-                passwordEncoder.encode(request.getPasswordNew())
-        );
+        account.setPassword(passwordEncoder.encode(request.getPasswordNew()));
 
         accountRepository.save(account);
     }

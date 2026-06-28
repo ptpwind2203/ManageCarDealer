@@ -23,14 +23,11 @@ public class carService {
     @Autowired
     private carDetailRepository carDetailRepository;
 
-    //xe
     public List<cars> findAll() {
         return carRepository.findAll();
     }
 
-    // ADD
     public cars addCar(cars car) {
-
         return carRepository.save(car);
     }
 

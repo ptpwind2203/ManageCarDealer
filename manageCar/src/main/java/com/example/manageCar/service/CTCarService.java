@@ -62,16 +62,12 @@ public class CTCarService {
                                 request.getCarID(),
                                 request.getColorID(),
                                 request.getVersionID()
-                        )
-                        .orElseThrow(() ->
+                        ).orElseThrow(() ->
                                 new RuntimeException("Không tìm thấy chi tiết xe"));
-
-        carDetail.setQuantity(
-                request.getQuantity()
+        carDetail.setQuantity(request.getQuantity()
         );
 
-        carDetail.setPrice(
-                request.getPrice()
+        carDetail.setPrice(request.getPrice()
         );
 
         carDetailRepository.save(carDetail);
